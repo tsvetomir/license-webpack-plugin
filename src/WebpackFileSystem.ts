@@ -8,8 +8,8 @@ class WebpackFileSystem implements FileSystem {
   constructor(private fs: any) {}
 
   isFileInDirectory(filename: string, directory: string): boolean {
-    const normalizedFile = this.resolvePath(filename);
-    const normalizedDirectory = this.resolvePath(directory);
+    const normalizedFile = this.resolvePaths(directory, filename);
+    const normalizedDirectory = this.resolvePaths(directory);
     return (
       !this.isDirectory(normalizedFile) &&
       normalizedFile.indexOf(normalizedDirectory) === 0
@@ -33,8 +33,8 @@ class WebpackFileSystem implements FileSystem {
     return path.join(...paths);
   }
 
-  resolvePath(pathInput: string): string {
-    return path.resolve(pathInput);
+  resolvePaths(...paths: string[]): string {
+    return path.resolve(...paths);
   }
 
   listPaths(dir: string): string[] {
